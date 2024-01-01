@@ -13,7 +13,7 @@ bl_info = {
 
 
 import bpy
-from .operators import ShowCode,ExecCode,SaveCode,DeleteCode
+from .operators import ShowCode,ExecCode,SaveCode,DeleteCode,RecordCode,PauseRecord
 from .ui import MainPanel
 
 
@@ -28,6 +28,8 @@ def register():
     bpy.utils.register_class(ExecCode)
     bpy.utils.register_class(SaveCode)
     bpy.utils.register_class(DeleteCode)
+    bpy.utils.register_class(RecordCode)
+    bpy.utils.register_class(PauseRecord)
     bpy.types.Scene.bs_filename=bpy.props.StringProperty(
         name="",
         description="bs_temp_file_name",
@@ -42,6 +44,8 @@ def unregister():
     bpy.utils.unregister_class(ExecCode)
     bpy.utils.unregister_class(SaveCode)
     bpy.utils.unregister_class(DeleteCode)
+    bpy.utils.unregister_class(RecordCode)
+    bpy.utils.unregister_class(PauseRecord)
     del bpy.types.Scene.bs_filename
 
 

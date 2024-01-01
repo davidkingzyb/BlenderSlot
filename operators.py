@@ -108,7 +108,6 @@ class ShowCode(bpy.types.Operator):
     )
 
     def execute(self, context):
-        print(self.file_name)       
         text = bpy.data.texts.get(self.file_name)
         if text is None:
             text = bpy.data.texts.new(self.file_name)
@@ -147,3 +146,70 @@ def split_area_to_text_editor(context):
     new_area = context.screen.areas[-1]
     new_area.type = 'TEXT_EDITOR'
     return new_area
+
+
+bpy.types.Scene.record_index = bpy.props.IntProperty()
+
+class RecordCode(bpy.types.Operator):
+    bl_idname='bs.recordcode'
+    bl_label='record'
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        records=getRecords()
+        bpy.context.scene.record_index=len(records)
+        return {'FINISHED'}
+    
+
+class PauseRecord(bpy.types.Operator):
+    bl_idname='bs.pauserecord'
+    bl_label='pause'
+    bl_options = {'REGISTER', 'UNDO'}
+
+    file_name:bpy.props.StringProperty(
+        name="file_name",
+        description="file name",
+        default="",
+    )
+
+    code:bpy.props.StringProperty(
+        name="code",
+        description="code",
+        default="",
+    )
+
+    def execute(self, context):
+        records=getRecords()
+        record_index=bpy.context.scene.record_index
+        text='import bpy\n'
+        for i in range(record_index,len(records)):
+            text=text+records[i]+'\n'
+        self.code=text
+        text_editor_area = None
+        for area in context.screen.areas:
+            if area.type == 'TEXT_EDITOR':
+                text_editor_area = area
+                break
+        if text_editor_area is None:
+            text_editor_area = split_area_to_text_editor(context)
+        _t = bpy.data.texts.new(name=self.file_name)
+        _t.write(text)
+
+        text_editor_area.spaces.active.text = _t
+        return {'FINISHED'}
+    
+def getRecords():
+    win = bpy.context.window_manager.windows[0]
+    area = win.screen.areas[0]
+    area_type = area.type
+    area.type = "INFO"
+    override = bpy.context.copy()
+    override['window'] = win
+    override['screen'] = win.screen
+    override['area'] = win.screen.areas[0]
+    bpy.ops.info.select_all(override, action='SELECT')
+    bpy.ops.info.report_copy(override)
+    area.type = area_type
+    clipboard = bpy.context.window_manager.clipboard
+    records=clipboard.split('\n')
+    return records

@@ -1,3 +1,5 @@
+# BlenderSlot !()[https://github.com/davidkingzyb/BlenderSlot]
+
 import bpy
 
 obj = bpy.context.active_object
