@@ -2,10 +2,10 @@
 
 bl_info = {
     "name": "BlenderSlot",
-    "description": "manage scripts and customize your own functions",
+    "description": "A blender addon for record your operations and manage your customize scripts.",
     "author": "DKZ",
     "version": (1, 0, 0),
-    "blender": (2, 93, 0),
+    "blender": (3, 6, 0),
     "location": "View3D > Sidebar > Blender Slot",
     "category": "System",
     "doc_url":"https://github.com/davidkingzyb/BlenderSlot"

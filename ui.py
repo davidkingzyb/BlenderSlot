@@ -34,9 +34,11 @@ class MainPanel(bpy.types.Panel):
         row = box.row(align=True)
         row.prop(context.scene,'bs_filename')
         # row.label(text=context.scene.bs_filename)
-        record_op=row.operator('bs.recordcode', text='', icon='REC')
-        pause_op=row.operator('bs.pauserecord', text='', icon='PAUSE')
-        pause_op.file_name=context.scene.bs_filename+'.py'
+        if bpy.context.scene.record_index==-1:
+            record_op=row.operator('bs.recordcode', text='', icon='REC')
+        else:
+            pause_op=row.operator('bs.pauserecord', text='', icon='PAUSE')
+            pause_op.file_name=context.scene.bs_filename+'.py'
         show_op=row.operator('bs.showcode', text='', icon='SCRIPT')
         show_op.file_name=context.scene.bs_filename+'.py'
         exec_op=row.operator('bs.execcode', text='', icon='PLAY')
