@@ -147,9 +147,6 @@ def split_area_to_text_editor(context):
     new_area.type = 'TEXT_EDITOR'
     return new_area
 
-bpy.types.Scene.record_index = bpy.props.IntProperty(default=-1)
-bpy.types.Scene.record_name = bpy.props.StringProperty()
-
 class RecordCode(bpy.types.Operator):
     bl_idname='bs.recordcode'
     bl_label='record'
@@ -180,12 +177,11 @@ class PauseRecord(bpy.types.Operator):
         default="",
     )
 
+
     def execute(self, context):
         records=getRecords()
         record_index=bpy.context.scene.record_index
-        bpy.context.scene.record_index=-1
-        bpy.utils.unregister_class(MainPanel)
-        bpy.utils.register_class(MainPanel)
+        bpy.context.scene.record_index=-1# init index for next record
         text='import bpy\n'
         for i in range(record_index,len(records)):
             text=text+records[i]+'\n'
@@ -197,10 +193,15 @@ class PauseRecord(bpy.types.Operator):
                 break
         if text_editor_area is None:
             text_editor_area = split_area_to_text_editor(context)
-        _t = bpy.data.texts.new(name=self.file_name)
+
+        _t = bpy.data.texts.new(name=self.file_name)# if have same name file_name will add .001
+        context.scene.bs_filename=_t.name
         _t.write(text)
+
         text_editor_area.spaces.active.text = _t
-        
+        # refresh ui
+        bpy.utils.unregister_class(MainPanel)
+        bpy.utils.register_class(MainPanel)
         return {'FINISHED'}
     
 def getRecords():

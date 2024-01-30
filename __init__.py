@@ -18,6 +18,7 @@ from .ui import MainPanel
 
 
 
+bpy.types.Scene.record_index = bpy.props.IntProperty(default=-1)
 
 ##### Registration #####
 

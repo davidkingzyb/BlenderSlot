@@ -33,15 +33,16 @@ class MainPanel(bpy.types.Panel):
         box=column.box()
         row = box.row(align=True)
         row.prop(context.scene,'bs_filename')
+        _type='' if '.py' in context.scene.bs_filename else '.py'# for 001
         # row.label(text=context.scene.bs_filename)
         if bpy.context.scene.record_index==-1:
             record_op=row.operator('bs.recordcode', text='', icon='REC')
         else:
             pause_op=row.operator('bs.pauserecord', text='', icon='PAUSE')
-            pause_op.file_name=context.scene.bs_filename+'.py'
+            pause_op.file_name=context.scene.bs_filename+_type
         show_op=row.operator('bs.showcode', text='', icon='SCRIPT')
-        show_op.file_name=context.scene.bs_filename+'.py'
+        show_op.file_name=context.scene.bs_filename+_type
         exec_op=row.operator('bs.execcode', text='', icon='PLAY')
-        exec_op.file_name=context.scene.bs_filename+'.py'
+        exec_op.file_name=context.scene.bs_filename+_type
         save_op=row.operator('bs.savecode', text='', icon='ADD')
-        save_op.file_name=context.scene.bs_filename+'.py'
+        save_op.file_name=context.scene.bs_filename+_type
