@@ -4,7 +4,7 @@ bl_info = {
     "name": "BlenderSlot",
     "description": "A blender addon for record your operations and manage your customize scripts.",
     "author": "DKZ",
-    "version": (1, 0, 0),
+    "version": (1, 0, 1),
     "blender": (3, 6, 0),
     "location": "View3D > Sidebar > Blender Slot",
     "category": "System",
