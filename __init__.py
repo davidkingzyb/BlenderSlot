@@ -18,7 +18,6 @@ from .ui import MainPanel
 
 
 
-bpy.types.Scene.record_index = bpy.props.IntProperty(default=-1)
 
 ##### Registration #####
 
@@ -36,6 +35,7 @@ def register():
         description="bs_temp_file_name",
         default="new_script",
     )
+    bpy.types.Scene.record_index = bpy.props.IntProperty(default=-1)
 
 
 
@@ -48,6 +48,7 @@ def unregister():
     bpy.utils.unregister_class(RecordCode)
     bpy.utils.unregister_class(PauseRecord)
     del bpy.types.Scene.bs_filename
+    del bpy.types.Scene.record_index
 
 
 if __name__ == "__main__":

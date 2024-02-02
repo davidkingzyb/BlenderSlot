@@ -140,7 +140,8 @@ def split_area_to_text_editor(context):
     for region in area.regions:
         if region.type == 'WINDOW':
             override = {'area': area, 'region': region}
-            bpy.ops.screen.area_split(override, direction='VERTICAL', factor=0.5)
+            # bpy.ops.screen.area_split(override, direction='VERTICAL', factor=0.5)
+            bpy.ops.screen.area_split(direction='VERTICAL', factor=0.5)
             break
 
     new_area = context.screen.areas[-1]
@@ -205,17 +206,27 @@ class PauseRecord(bpy.types.Operator):
         return {'FINISHED'}
     
 def getRecords():
-    win = bpy.context.window_manager.windows[0]
-    area = win.screen.areas[0]
-    area_type = area.type
-    area.type = "INFO"
-    override = bpy.context.copy()
-    override['window'] = win
-    override['screen'] = win.screen
-    override['area'] = win.screen.areas[0]
-    bpy.ops.info.select_all(override, action='SELECT')
-    bpy.ops.info.report_copy(override)
-    area.type = area_type
-    clipboard = bpy.context.window_manager.clipboard
-    records=clipboard.split('\n')
+    # win = bpy.context.window_manager.windows[0]
+    # area = win.screen.areas[0]
+    # area_type = area.type
+    # area.type = "INFO"
+    # override = bpy.context.copy()
+    # override['window'] = win
+    # override['screen'] = win.screen
+    # override['area'] = win.screen.areas[0]
+    # bpy.ops.info.select_all(override, action='SELECT')
+    # bpy.ops.info.report_copy(override)
+    # area.type = area_type
+    # clipboard = bpy.context.window_manager.clipboard
+    # records=clipboard.split('\n')
+
+    area = bpy.context.area
+    old_type = area.type
+    area.type = 'INFO'
+    bpy.ops.info.select_all()
+    bpy.ops.info.report_copy()
+    pasted_text = bpy.context.window_manager.clipboard
+    records=pasted_text.split('\n')
+    area.type = old_type
+    
     return records
