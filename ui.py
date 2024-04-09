@@ -19,8 +19,7 @@ class MainPanel(bpy.types.Panel):
         slots=os.listdir(os.path.join(root_path,'slot'))
 
         for slot in slots:
-            box=column.box()
-            row = box.row(align=True)
+            row = column.box().row(align=True)
             row.label(text=slot.replace('.py',''))
             save_op=row.operator('bs.savecode', text='', icon='ADD')
             save_op.file_name=slot
@@ -31,12 +30,11 @@ class MainPanel(bpy.types.Panel):
             exec_op=row.operator('bs.execcode', text='', icon='PLAY')
             exec_op.file_name=slot
 
-        box=column.box()
-        row = box.row(align=True)
+        row = column.box().row(align=True)
         row.prop(context.scene,'bs_filename')
         _type='' if '.py' in context.scene.bs_filename else '.py'# for 001
         # row.label(text=context.scene.bs_filename)
-        if bpy.context.scene.record_index==-1:
+        if bpy.context.scene.bs_record_index==-1:
             record_op=row.operator('bs.recordcode', text='', icon='REC')
         else:
             pause_op=row.operator('bs.pauserecord', text='', icon='PAUSE')
@@ -49,11 +47,11 @@ class MainPanel(bpy.types.Panel):
         save_op.file_name=context.scene.bs_filename+_type
 
         # ollama
-        ollama_text_box=column.box()
-        ollama_text_row = ollama_text_box.row(align=True)
-        ollama_text_row.prop(context.scene, 'bs_ollama_query',expand=True)
-        ollama_box=column.box()
-        ollama_row= ollama_box.row(align=True)
+        ollama_enum_row= column.box().row(align=True)
+        ollama_enum_row.prop(context.scene,'bs_ollama_model')
+        ollama_text_row = column.box().row(align=True)
+        ollama_text_row.prop(context.scene, 'bs_ollama_query')
+        ollama_row= column.box().row(align=True)
         ollama_op=ollama_row.operator('bs.ask_ollama', text='ask ollama', icon='QUESTION')
         ollama_op.file_name=context.scene.bs_filename+_type
         ollama_op.query=context.scene.bs_ollama_query
