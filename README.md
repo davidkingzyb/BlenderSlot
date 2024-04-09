@@ -4,7 +4,7 @@
 
 2024/4/9 by DKZ
 
-![tutorial](https://github.com/davidkingzyb/BlenderSlot/assets/6694635/b5c3cef8-6e09-43e6-81f4-e8b40206320d)
+![blenderslotwithollama](https://github.com/davidkingzyb/BlenderSlot/assets/6694635/2ebce1bb-d974-4b33-a3cd-6c817b517128)
 
 1. name your script  
 2. press record button and do your operations   
@@ -14,7 +14,9 @@
 
 ## v1.1 Generate scripts use AI
 
-Install [🦙Ollama](https://ollama.com/), and now we can use AI to generate script in BlenderSlot!
+![bs1](https://github.com/davidkingzyb/BlenderSlot/assets/6694635/5559d533-fa1c-4f13-8156-31f2cce37e69)
+
+Install [Ollama](https://ollama.com/), and now we can use AI to generate script in BlenderSlot!
 
 ***
 

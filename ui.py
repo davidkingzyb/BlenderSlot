@@ -21,10 +21,10 @@ class MainPanel(bpy.types.Panel):
         for slot in slots:
             row = column.box().row(align=True)
             row.label(text=slot.replace('.py',''))
-            save_op=row.operator('bs.savecode', text='', icon='ADD')
-            save_op.file_name=slot
             delete_op=row.operator('bs.deletecode', text='', icon='REMOVE')
             delete_op.file_name=slot
+            save_op=row.operator('bs.savecode', text='', icon='ADD')
+            save_op.file_name=slot
             show_op=row.operator('bs.showcode', text='', icon='SCRIPT')
             show_op.file_name=slot
             exec_op=row.operator('bs.execcode', text='', icon='PLAY')
@@ -39,13 +39,13 @@ class MainPanel(bpy.types.Panel):
         else:
             pause_op=row.operator('bs.pauserecord', text='', icon='PAUSE')
             pause_op.file_name=context.scene.bs_filename+_type
+        save_op=row.operator('bs.savecode', text='', icon='ADD')
+        save_op.file_name=context.scene.bs_filename+_type    
         show_op=row.operator('bs.showcode', text='', icon='SCRIPT')
         show_op.file_name=context.scene.bs_filename+_type
         exec_op=row.operator('bs.execcode', text='', icon='PLAY')
         exec_op.file_name=context.scene.bs_filename+_type
-        save_op=row.operator('bs.savecode', text='', icon='ADD')
-        save_op.file_name=context.scene.bs_filename+_type
-
+        
         # ollama
         ollama_enum_row= column.box().row(align=True)
         ollama_enum_row.prop(context.scene,'bs_ollama_model')
