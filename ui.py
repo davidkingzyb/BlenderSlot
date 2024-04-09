@@ -2,6 +2,7 @@
 
 import bpy
 import os
+
 root_path=os.path.dirname(__file__)
 
 class MainPanel(bpy.types.Panel):
@@ -46,3 +47,14 @@ class MainPanel(bpy.types.Panel):
         exec_op.file_name=context.scene.bs_filename+_type
         save_op=row.operator('bs.savecode', text='', icon='ADD')
         save_op.file_name=context.scene.bs_filename+_type
+
+        # ollama
+        ollama_text_box=column.box()
+        ollama_text_row = ollama_text_box.row(align=True)
+        ollama_text_row.prop(context.scene, 'bs_ollama_query',expand=True)
+        ollama_box=column.box()
+        ollama_row= ollama_box.row(align=True)
+        ollama_op=ollama_row.operator('bs.ask_ollama', text='ask ollama', icon='QUESTION')
+        ollama_op.file_name=context.scene.bs_filename+_type
+        ollama_op.query=context.scene.bs_ollama_query
+
