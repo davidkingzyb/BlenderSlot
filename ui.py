@@ -20,52 +20,54 @@ class MainPanel(bpy.types.Panel):
 
         for slot in slots:
             row = column.box().row(align=True)
-            row.label(text=slot.replace('.py',''))
+            # row.label(text=slot.replace('.py',''))
+            exec_op=row.operator('bs.execcode', text=slot.replace('.py',''), icon='PLAY')  
+            exec_op.file_name=slot
             delete_op=row.operator('bs.deletecode', text='', icon='REMOVE')
             delete_op.file_name=slot
             save_op=row.operator('bs.savecode', text='', icon='ADD')
             save_op.file_name=slot
             show_op=row.operator('bs.showcode', text='', icon='SCRIPT')
             show_op.file_name=slot
-            exec_op=row.operator('bs.execcode', text='', icon='PLAY')
-            exec_op.file_name=slot
-
+            
         for link_script in bpy.data.texts.items():
             row = column.box().row(align=True)
-            row.label(text=link_script[0].replace('.py',''))
+            # row.label(text=link_script[0].replace('.py',''))
+            exec_op=row.operator('bs.execcode', text=link_script[0].replace('.py',''), icon='PLAY')
+            exec_op.file_name=link_script[0]
             unlink_op=row.operator('bs.unlinkcode', text='', icon='X')
             unlink_op.file_name=link_script[0]
             save_op=row.operator('bs.savecode', text='', icon='ADD')
             save_op.file_name=link_script[0]
             show_op=row.operator('bs.showcode', text='', icon='SCRIPT')
             show_op.file_name=link_script[0]
-            exec_op=row.operator('bs.execcode', text='', icon='PLAY')
-            exec_op.file_name=link_script[0]
-
+            
         row = column.box().row(align=True)
-        row.prop(context.scene,'bs_filename')
+        
         _type='' if '.py' in context.scene.bs_filename else '.py'# for 001
-        # row.label(text=context.scene.bs_filename)
+        
         if bpy.context.scene.bs_record_index==-1:
             record_op=row.operator('bs.recordcode', text='', icon='REC')
         else:
             pause_op=row.operator('bs.pauserecord', text='', icon='PAUSE')
             pause_op.file_name=context.scene.bs_filename+_type
-        save_op=row.operator('bs.savecode', text='', icon='ADD')
-        save_op.file_name=context.scene.bs_filename+_type    
+        row.prop(context.scene,'bs_filename')
+        # exec_op=row.operator('bs.execcode', text='', icon='PLAY')
+        # exec_op.file_name=context.scene.bs_filename+_type
+        # row.label(text=context.scene.bs_filename)
+        # save_op=row.operator('bs.savecode', text='', icon='ADD')
+        # save_op.file_name=context.scene.bs_filename+_type    
         show_op=row.operator('bs.showcode', text='', icon='SCRIPT')
         show_op.file_name=context.scene.bs_filename+_type
-        exec_op=row.operator('bs.execcode', text='', icon='PLAY')
-        exec_op.file_name=context.scene.bs_filename+_type
         
         # ollama
         
         ollama_box=column.box()
         ollama_text_row = ollama_box.row(align=True)
         ollama_text_row.prop(context.scene, 'bs_ollama_query')
-        ollama_row= ollama_box.row(align=True)
-        ollama_row.prop(context.scene,'bs_ollama_model')
+        ollama_row=ollama_box.row(align=True)
         ollama_op=ollama_row.operator('bs.ask_ollama', text='', icon='QUESTION')
         ollama_op.file_name=context.scene.bs_filename+_type
         ollama_op.query=context.scene.bs_ollama_query
+        ollama_row.prop(context.scene,'bs_ollama_model')
 

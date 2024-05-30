@@ -6,8 +6,9 @@ from .operators import split_area_to_text_editor
 ollama_host='http://127.0.0.1:11434'
 
 class AskOllama(bpy.types.Operator):
+    """ask ollama and generate script by AI"""
     bl_idname='bs.ask_ollama'
-    bl_label='ollama'
+    bl_label='ask ai'
     bl_options = {'REGISTER', 'UNDO'}
 
     file_name:bpy.props.StringProperty(

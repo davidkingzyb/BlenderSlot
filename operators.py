@@ -7,6 +7,7 @@ root_path=os.path.dirname(__file__)
 
 
 class DeleteCode(bpy.types.Operator):
+    """delete script and remove slot from BlenderSlot"""
     bl_idname='bs.deletecode'
     bl_label='delete'
     bl_options = {'REGISTER', 'UNDO'}
@@ -28,6 +29,7 @@ class DeleteCode(bpy.types.Operator):
         return {'FINISHED'}
     
 class UnlinkCode(bpy.types.Operator):
+    """delete script from current blender file"""
     bl_idname='bs.unlinkcode'
     bl_label='unlink'
     bl_options = {'REGISTER', 'UNDO'}
@@ -47,6 +49,7 @@ class UnlinkCode(bpy.types.Operator):
         return {'FINISHED'}
 
 class SaveCode(bpy.types.Operator):
+    """save script to BlenderSlot"""
     bl_idname='bs.savecode'
     bl_label='save'
     bl_options = {'REGISTER', 'UNDO'}
@@ -73,6 +76,7 @@ class SaveCode(bpy.types.Operator):
         return {'FINISHED'}
 
 class ExecCode(bpy.types.Operator):
+    """exec custom script"""
     bl_idname='bs.execcode'
     bl_label='exec'
     bl_options = {'REGISTER', 'UNDO'}
@@ -109,6 +113,7 @@ class ExecCode(bpy.types.Operator):
         return {'FINISHED'}
 
 class ShowCode(bpy.types.Operator):
+    """open Text Editor"""
     bl_idname='bs.showcode'
     bl_label='show'
     bl_options = {'REGISTER', 'UNDO'}
@@ -155,6 +160,7 @@ class ShowCode(bpy.types.Operator):
         return {'FINISHED'}
 
 class RecordCode(bpy.types.Operator):
+    """start record your operations"""
     bl_idname='bs.recordcode'
     bl_label='record'
     bl_options = {'REGISTER', 'UNDO'}
@@ -168,6 +174,7 @@ class RecordCode(bpy.types.Operator):
     
 
 class PauseRecord(bpy.types.Operator):
+    """stop record your operations and generate script"""
     bl_idname='bs.pauserecord'
     bl_label='pause'
     bl_options = {'REGISTER', 'UNDO'}
