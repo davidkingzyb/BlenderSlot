@@ -13,7 +13,7 @@ bl_info = {
 
 
 import bpy
-from .operators import ShowCode,ExecCode,SaveCode,DeleteCode,RecordCode,PauseRecord
+from .operators import ShowCode,ExecCode,SaveCode,DeleteCode,RecordCode,PauseRecord,UnlinkCode
 from .ollama_op import AskOllama,getOllamaModels
 from .ui import MainPanel
 
@@ -29,6 +29,7 @@ def register():
     bpy.utils.register_class(RecordCode)
     bpy.utils.register_class(PauseRecord)
     bpy.utils.register_class(AskOllama)
+    bpy.utils.register_class(UnlinkCode)
     bpy.types.Scene.bs_filename=bpy.props.StringProperty(
         name="",
         default="new_script",
@@ -52,6 +53,8 @@ def unregister():
     bpy.utils.unregister_class(RecordCode)
     bpy.utils.unregister_class(PauseRecord)
     bpy.utils.unregister_class(AskOllama)
+    bpy.utils.unregister_class(UnlinkCode)
+
     del bpy.types.Scene.bs_filename
     del bpy.types.Scene.bs_record_index
     del bpy.types.Scene.bs_ollama_query
@@ -60,3 +63,5 @@ def unregister():
 
 if __name__ == "__main__":
     register()
+    
+    

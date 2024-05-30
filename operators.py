@@ -26,6 +26,25 @@ class DeleteCode(bpy.types.Operator):
         bpy.utils.unregister_class(MainPanel)
         bpy.utils.register_class(MainPanel)
         return {'FINISHED'}
+    
+class UnlinkCode(bpy.types.Operator):
+    bl_idname='bs.unlinkcode'
+    bl_label='unlink'
+    bl_options = {'REGISTER', 'UNDO'}
+
+    file_name:bpy.props.StringProperty(
+        name="file_name",
+        description="file name",
+        default="",
+    )
+
+    def execute(self, context):
+        for x in bpy.data.texts.items():
+            if x[0]== self.file_name:
+                bpy.data.texts.remove(x[1])
+        bpy.utils.unregister_class(MainPanel)
+        bpy.utils.register_class(MainPanel)
+        return {'FINISHED'}
 
 class SaveCode(bpy.types.Operator):
     bl_idname='bs.savecode'
@@ -107,6 +126,7 @@ class ShowCode(bpy.types.Operator):
     )
 
     def execute(self, context):
+        print('',bpy.utils.script_path_user())
         text = bpy.data.texts.get(self.file_name)
         if text is None:
             text = bpy.data.texts.new(self.file_name)
@@ -164,7 +184,6 @@ class PauseRecord(bpy.types.Operator):
         default="",
     )
 
-
     def execute(self, context):
         records=getRecords()
         bs_record_index=bpy.context.scene.bs_record_index
@@ -210,7 +229,6 @@ def split_area_to_text_editor(context):
             override = {'area': area, 'region': region}
             bpy.ops.screen.area_split(direction='VERTICAL', factor=0.5)
             break
-
     new_area = context.screen.areas[-1]
     new_area.type = 'TEXT_EDITOR'
     return new_area

@@ -30,6 +30,18 @@ class MainPanel(bpy.types.Panel):
             exec_op=row.operator('bs.execcode', text='', icon='PLAY')
             exec_op.file_name=slot
 
+        for link_script in bpy.data.texts.items():
+            row = column.box().row(align=True)
+            row.label(text=link_script[0].replace('.py',''))
+            unlink_op=row.operator('bs.unlinkcode', text='', icon='X')
+            unlink_op.file_name=link_script[0]
+            save_op=row.operator('bs.savecode', text='', icon='ADD')
+            save_op.file_name=link_script[0]
+            show_op=row.operator('bs.showcode', text='', icon='SCRIPT')
+            show_op.file_name=link_script[0]
+            exec_op=row.operator('bs.execcode', text='', icon='PLAY')
+            exec_op.file_name=link_script[0]
+
         row = column.box().row(align=True)
         row.prop(context.scene,'bs_filename')
         _type='' if '.py' in context.scene.bs_filename else '.py'# for 001
