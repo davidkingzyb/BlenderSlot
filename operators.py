@@ -20,6 +20,10 @@ class DeleteCode(bpy.types.Operator):
 
     def execute(self, context):
         try:
+            with open(os.path.join(root_path,'slot\\'+self.file_name),'r') as f:
+                text=f.read()
+            _t = bpy.data.texts.new(name=self.file_name)# if have same name file_name will add .001
+            _t.write(text)
             os.remove(os.path.join(root_path,'slot\\'+self.file_name))
         except Exception as e:
             pass
